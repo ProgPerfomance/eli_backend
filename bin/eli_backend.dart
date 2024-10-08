@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:eli_backend/data/company_data.dart';
 import 'package:eli_backend/data/user_data.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -49,13 +50,13 @@ void main() async {
   router.post('/getCompanies', (Request request) async {
     var json = await request.readAsString();
     var data = jsonDecode(json);
-    final response = await UserData().getUserData(uid: data['uid']);
+    final response = await CompanyData().getCompanies();
     return Response.ok(jsonEncode(response));
   });
   router.post('/createCompany', (Request request) async {
     var json = await request.readAsString();
     var data = jsonDecode(json);
-    await UserData().createCompany(
+    await CompanyData().createCompany(
         name: data['name'],
         owner_uuid: data['owner_uuid'],
         sphere_type: data['sphere_type'],

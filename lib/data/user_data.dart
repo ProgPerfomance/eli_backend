@@ -89,26 +89,4 @@ class UserData {
       return {'error': e};
     }
   }
-
-  Future createCompany({
-    name,
-    owner_uuid,
-    sphere_type,
-    capitalization_rub,
-  }) async {
-    try {
-      var sql = await MySQLConnection.createConnection(
-          host: 'localhost',
-          port: 3306,
-          userName: 'root',
-          password: '1234567890',
-          databaseName: 'eli');
-      await sql.connect();
-      // String uuid = Uuid().v1();
-      await sql.execute(
-          "insert into companies (name, owner_uuid, sphere_type, capitalization_rub) values ('$name', '$owner_uuid', $sphere_type, $capitalization_rub)");
-    } catch (e) {
-      print(e);
-    }
-  }
 }
