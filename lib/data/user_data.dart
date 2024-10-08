@@ -3,13 +3,13 @@ import 'package:uuid/uuid.dart';
 
 class UserData {
   Future<String> createUser({
-    required firstName,
-    required lastName,
-    required middleName,
-    required role,
-    required company,
-    required email,
-    required password,
+    firstName,
+    lastName,
+    middleName,
+    role,
+    company,
+    email,
+    password,
   }) async {
     try {
       var sql = await MySQLConnection.createConnection(
@@ -28,10 +28,11 @@ class UserData {
       return '';
     }
   }
-  Future<String> authUserFromEmailAndPassword ({
-    required email,
-    required password,
-}) async {
+
+  Future<String> authUserFromEmailAndPassword({
+    email,
+    password,
+  }) async {
     var sql = await MySQLConnection.createConnection(
         host: 'localhost',
         port: 3306,
@@ -48,8 +49,9 @@ class UserData {
       return 'error';
     }
   }
-  Future<Map> getUserData ({
-    required uid,
+
+  Future<Map> getUserData({
+    uid,
   }) async {
     var sql = await MySQLConnection.createConnection(
         host: 'localhost',
@@ -59,12 +61,54 @@ class UserData {
         databaseName: 'eli');
     await sql.connect();
     try {
-      final response = await sql.execute(
-          "select * from users where user_id = '$uid'");
+      final response =
+          await sql.execute("select * from users where user_id = '$uid'");
       return response.rows.first.assoc();
     } catch (e) {
       print(e);
       return {'error': e};
+    }
+  }
+
+  Future<Map> getUsers({
+    uid,
+  }) async {
+    var sql = await MySQLConnection.createConnection(
+        host: 'localhost',
+        port: 3306,
+        userName: 'root',
+        password: '1234567890',
+        databaseName: 'eli');
+    await sql.connect();
+    try {
+      final response =
+          await sql.execute("select * from users where user_id = '$uid'");
+      return response.rows.first.assoc();
+    } catch (e) {
+      print(e);
+      return {'error': e};
+    }
+  }
+
+  Future createCompany({
+    name,
+    owner_uuid,
+    sphere_type,
+    capitalization_rub,
+  }) async {
+    try {
+      var sql = await MySQLConnection.createConnection(
+          host: 'localhost',
+          port: 3306,
+          userName: 'root',
+          password: '1234567890',
+          databaseName: 'eli');
+      await sql.connect();
+      // String uuid = Uuid().v1();
+      await sql.execute(
+          "insert into companies (name, owner_uuid, sphere_type, capitalization_rub) values ('$name', '$owner_uuid', $sphere_type, $capitalization_rub)");
+    } catch (e) {
+      print(e);
     }
   }
 }
