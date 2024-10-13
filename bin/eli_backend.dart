@@ -33,13 +33,15 @@ void main() async {
     var data = jsonDecode(json);
     final response = await UserData().authUserFromEmailAndPassword(
         email: data['email'], password: data['password']);
-    return Response.ok(response.toString());
+    return Response.ok(jsonEncode({'data': response.toString()}),
+        headers: {'Content-Type': 'application/json'});
   });
   router.post('/getUserData', (Request request) async {
     var json = await request.readAsString();
     var data = jsonDecode(json);
     final response = await UserData().getUserData(uid: data['uid']);
-    return Response.ok(jsonEncode(response));
+    return Response.ok(jsonEncode(response),
+        headers: {'Content-Type': 'application/json'});
   });
   router.post('/getUsers', (Request request) async {
     var json = await request.readAsString();
