@@ -50,8 +50,8 @@ void main() async {
     return Response.ok(jsonEncode(response));
   });
   router.post('/getCompanies', (Request request) async {
-    var json = await request.readAsString();
-    var data = jsonDecode(json);
+    // var json = await request.readAsString();
+    // var data = jsonDecode(json);
     final response = await CompanyData().getCompanies();
     return Response.ok(jsonEncode(response));
   });
