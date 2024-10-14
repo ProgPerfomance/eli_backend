@@ -60,8 +60,8 @@ void main() async {
     var data = jsonDecode(json);
     await CompanyData().createCompany(
         name: data['name'],
-        owner_uuid: data['owner_uuid'],
-        sphere_type: data['sphere_type'],
+        owner_uuid: data['uid'],
+        sphere: data['sphere'],
         capitalization_rub: data['capitalization_rub']);
     return Response.ok('created');
   });

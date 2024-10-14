@@ -5,7 +5,7 @@ class CompanyData {
   Future createCompany({
     name,
     owner_uuid,
-    sphere_type,
+    sphere,
     capitalization_rub,
   }) async {
     try {
@@ -18,7 +18,7 @@ class CompanyData {
       await sql.connect();
       // String uuid = Uuid().v1();
       await sql.execute(
-          "insert into companies (name, owner_uuid, sphere_type, capitalization_rub) values ('$name', '$owner_uuid', $sphere_type, $capitalization_rub)");
+          "insert into companies (name, owner_uuid, sphere, capitalization_rub) values ('$name', '$owner_uuid', '$sphere', $capitalization_rub)");
     } catch (e) {
       print(e);
     }
